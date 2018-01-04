@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"/>
+<title>PPOMPPU - SCRAP</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<style>
+		pre{
+			min-height:500px;
+			max-height: 500px;
+			overflow:scroll;
+		}
+	</style>
+	
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">| AMS | Article Management System</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Article</a></li>
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<h3><span class="label label-primary">ARTICLES</span></h3><hr/>
+		<table class="table table-striped">
+			<thead>
+		      <tr>
+		      	<th>no</th>
+		      	<th>title</th>
+		        <th>action</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr>
+		      	<td><span class="label label-default">1</span></td>
+		      	<td><span class="label label-primary">Hello</span></td>
+		        <td>
+		        	<a class="label label-default" href="#">View</a>
+		        	<a class="label label-primary" href="#">Edit</a>
+		        	<a class="label label-danger" href="#">Remove</a>
+		        </td>
+		      </tr>
+		    </tbody>
+		</table>
+	</div>
+	
+	<script th:inline="javascript">
+	
+		(function(){
+			
+			//TODO: 
+			$.ajax({
+				url: '/rest/articles',
+				method: 'GET',
+				success: function(data){
+					console.log(data);
+					renderView(data);
+				},
+				error: function(error){
+					console.log(error);
+				}
+			});
+			
+			//TODO:
+			function renderView(articles){
+				var tr = ``;
+				articles.forEach(function(article){
+					tr += `<tr>
+					      	<td><span class="label label-default">${article.id}</span></td>
+					      	<td><span class="label label-primary">${article.title}</span></td>
+					        <td>
+					        	<a class="label label-default" href="#">View</a>
+					        	<a class="label label-primary" href="#">Edit</a>
+					        	<a class="label label-danger" href="#">Remove</a>
+					        </td>
+					      </tr>`;
+				});
+				$('tbody').html(tr);
+			}
+		})();
+	</script>
+</body>
+</html>
